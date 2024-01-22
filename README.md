@@ -25,6 +25,10 @@ Go to Settings `Custom Group Import Sorter` open `settings.json` and add 3 custo
 ]
 ```
 
+So the output will be 
+
+<img width="428" alt="Screen Shot 2024-01-22 at 4 44 04 p m" src="https://github.com/frxncismor/custom-group-import-sorter/assets/30633617/f343013f-856f-4ed0-8983-655e82608ad4">
+
 > [!NOTE]
 > Any library that doesn't exists in the groups will be sorted at the bottom.
 
