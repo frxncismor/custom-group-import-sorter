@@ -2,6 +2,7 @@
   "name": "custom-group-import-sorter",
   "displayName": "custom-group-import-sorter",
   "description": "Sort your imports as custom groups",
+  "publisher": "FranciscoMoreno",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.85.0"

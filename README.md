@@ -5,7 +5,7 @@
 
 ## Install
 
-Click the extension tab and in there search `Custom Group Import Sorter` and install it. Or just go to [Custom Group Import Sorter]().
+Click the extension tab and in there search `Custom Group Import Sorter` and install it. Or just go to [Custom Group Import Sorter](https://marketplace.visualstudio.com/items?itemName=FranciscoMoreno.custom-group-import-sorter).
 
 ## How to Use - Configuration
 
