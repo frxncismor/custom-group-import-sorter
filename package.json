@@ -1,7 +1,7 @@
 {
   "name": "custom-group-import-sorter",
   "displayName": "custom-group-import-sorter",
-  "description": "Customizable sorting of imports in a TypeScript file",
+  "description": "Sort your imports as custom groups",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.85.0"

@@ -25,8 +25,11 @@ Go to Settings `Custom Group Import Sorter` open `settings.json` and add 3 custo
 ]
 ```
 
-> [!NOTE]  
-> Any library that doesn't exists in the groups will be sorted at the top
+> [!NOTE]
+> Any library that doesn't exists in the groups will be sorted at the top.
+
+> [!WARNING]
+> Only select your imports or any other code selected will be removed.
 
 ## How to Use - Execution
 - Select the desired ones.
