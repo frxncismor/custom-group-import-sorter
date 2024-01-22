@@ -7,6 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
+    const document = editor.document;
     const selections = editor.selections;
 
     if (selections.length === 0) {
@@ -20,65 +21,73 @@ export function activate(context: vscode.ExtensionContext) {
     const group3: string[] = configuration.get('Group3', []);
 
     const groups: { [key: string]: string[] } = {
-      'Undefined': [],
-      'Group1': group1,
-      'Group2': group2,
-      'Group3': group3,
+      Group1: group1,
+      Group2: group2,
+      Group3: group3,
+      GroupUndefined: []
     };
-    
-    let sortedText = '';
+
+    const groupedImports: { [key: string]: string[] } = {};
+    const sortedTexts: string[] = [];
 
     selections.forEach((selection) => {
-      const selectedText = editor.document.getText(selection);
+      const selectedText = document.getText(selection);
       const importMatches = selectedText.match(/import .* from '(.*)';/g);
 
       if (!importMatches) {
         return;
       }
 
-      const groupedImports: { [key: string]: string[] } = {};
-
-      for (const groupName in groups) {
-        groupedImports[groupName] = [];
-      }
+      groupedImports['GroupUndefined'] = [];
 
       importMatches.forEach((importStatement) => {
         const lib = importStatement.match(/from '(.*)';/)![1];
 
-        let foundGroup = false;
+        let isGroupFound = false;
         for (const groupName in groups) {
+          if (groupName === 'GroupUndefined') {
+            continue;
+          }
+            
           const group = groups[groupName];
 
-          if (group.includes(lib)) {
+          if (group.some((item) => lib.startsWith(item))) {
+            if (!groupedImports[groupName]) {
+              groupedImports[groupName] = [];
+            }
             groupedImports[groupName].push(importStatement);
-            foundGroup = true;
+            isGroupFound = true;
             break;
           }
         }
 
-        if (!foundGroup) {
-          groupedImports['Undefined'].push(importStatement);
+        if (!isGroupFound) {
+          groupedImports['GroupUndefined'].push(importStatement);
         }
       });
 
+      const sortedImports: string[] = [];
       for (const groupName in groups) {
         const group = groupedImports[groupName];
 
-        if (group.length > 0) {
+        if (group && group.length > 0) {
           group.sort((a, b) => {
             const libA = a.match(/from '(.*)';/)![1];
             const libB = b.match(/from '(.*)';/)![1];
             return libA.localeCompare(libB);
           });
 
-          sortedText += group.join('\n') + '\n\n';
+          sortedImports.push(...group, '');
         }
       }
+
+      sortedTexts.push(sortedImports.join('\n'));
     });
 
     editor.edit((editBuilder) => {
-      selections.forEach((selection) => {
-        editBuilder.replace(selection, sortedText.trim());
+      selections.forEach((selection, index) => {
+        const sortedText = sortedTexts[index].trim();
+        editBuilder.replace(selection, sortedText);
       });
     });
   });
